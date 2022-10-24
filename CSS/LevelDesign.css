@@ -1,0 +1,208 @@
+/* Sandro */
+@font-face {
+font-family:Pixelschrift;
+src: url('../font/retro.ttf');
+}
+#Gelb{
+    /*Maren*/
+    padding-left:0.5em;
+    padding-top:0.5em;
+    font-size: 1.5rem;
+    /*MarenEnde*/
+    color:yellow;
+    background-color:rgba(255, 255, 255, 0.404);
+}
+#Gruen{
+    /*Maren*/
+    padding-left:0.5em;
+    font-size: 1.5rem;
+    /*MarenEnde*/
+    color:rgb(1, 155, 1);
+    background-color:rgba(255, 255, 255, 0.404);
+}
+#Blau{
+    /*Maren*/
+    padding-left:0.5em;
+    font-size: 1.5rem;
+    /*MarenEnde*/
+    color:blue;
+    background-color:rgba(255, 255, 255, 0.404);
+}
+#Rot{
+    /*Maren*/
+    padding-left:0.5em;
+    font-size: 1.5rem;
+    /*MarenEnde*/
+    color:red;
+    background-color:rgba(255, 255, 255, 0.404);
+}
+/*Maren*/
+#leben{
+padding:0.5em;
+background-color:rgba(255, 255, 255, 0.404);
+}
+/*--*/
+a{
+    text-decoration:none;
+    color:rgb(255, 255, 255);
+    border:3px solid #ec681b;
+    margin:1rem;
+}
+#defeat{
+    display:none;
+    position:fixed;
+    text-align:center;
+    font-family:Pixelschrift;
+    font-size: 4rem;
+    background-color:rgb(0, 0, 0);
+    width:100%;
+    height:100%;
+    padding:5px;
+}
+h2{
+    font-family:Pixelschrift;
+    font-size: 7rem;
+    color:red;
+}
+#winMenu{
+    font-family:Pixelschrift;
+    font-size: 4rem;
+    color:#ec681b;
+    margin-top:7rem;
+}
+#victory{
+    font-size: 1.5rem;
+    font-family:Pixelschrift;
+    display:none;
+    position:fixed;
+    text-align: center;
+    width:100vw;
+    height:100vh;
+    background-color:#000000;
+    
+}
+#credits{
+    margin-top:7rem;
+    font-size: 1.5rem;
+    font-family:Pixelschrift;
+}
+#anzeigeQuest{
+    display:block;
+    position:fixed;
+    text-align:center;
+    font-size: 1.5rem;
+    font-family:Pixelschrift;
+    background-color:black;
+    block-size:1.5em;
+    width:100vw;
+    left:0;
+    color:#ec681b;
+}
+/* ---- */
+/* Maren */
+#Home{
+    position:fixed;
+    margin-left:-3em;
+    margin-top:0em;
+    }
+#Fragezeichen{
+    border:none;
+    position:fixed;
+    font-family:'Courier New', Courier, monospace;
+    font-weight:bold;
+    font-size:2.5rem;
+    display:flex;
+    color:#ec681b;
+    background-color:black;
+    justify-content: space-around;
+    top:-0.4em;
+    }
+#Anzeige{
+    /*display:none;*/
+    font-size: 1.5rem;
+    font-family:Pixelschrift;
+    display:block;
+    position:absolute;
+    left: 2vw;
+    top:7vh;
+    width:19vw;
+}
+/* ---- */
+/* Sandro */
+#Hintergrund{
+    display:none;
+}
+#Tileset{
+    display:none;
+}
+#Bildquellen{
+   display:none;
+}
+#Leinwand{
+    /* box-shadow:4px 4px 8px #000000; */
+    display:block;
+    position:absolute;
+}
+/* ---- */
+/* Maren */
+.Schliessfeld {
+    display: block !important ;
+    position: absolute !important ;
+    top: 0px !important; 
+    right: 0px !important ;
+    width: 2.4em !important ;
+    height: 1.6em !important ;
+    border: solid 1px #ec681b !important ;
+    border-radius: 0.3em !important ;
+    background-color: #000000 !important;
+    color: #ec681b !important ;
+    font-weight: bold !important;
+    text-align: center !important ;
+    text-decoration: none !important ;
+}
+form#Steuerung{
+    display:none;
+    z-index:5;
+    margin:0 auto;
+    background-color:black;
+    color:#ec681b;
+    box-shadow: 3px 3px 4px 4px #000000;
+    height:95vh;
+    border:solid 3px #ec681b;
+}
+form#Steuerung:target{
+    display:block;
+    position:fixed;
+}
+form#Steuerung legend{
+    font-family: Pixelschrift;
+    font-size: 2rem;
+    margin:0.5em;
+}
+form#Steuerung a {
+    display:inline-block;
+    width:50em;
+}
+form#Steuerung #SteuerungBild{
+    display:block;
+    width:auto;
+    height:80vh;
+    margin:0 auto;
+}
+fieldset{
+    border:none;
+}
+/* ---- */
+/* Sandro */
+body{
+    background-color: rgb(0, 0, 0);
+    color:white;
+    display:flex;
+    justify-content:center;
+}
+canvas{
+    background-color:#a1a1a1;
+    width:95vw;
+    height:auto;
+    max-height: 90vh;
+} 

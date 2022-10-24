@@ -1,0 +1,62 @@
+@font-face {
+  font-family: Pixelschrift;
+  src: url("../font/retro.ttf");
+}
+
+html {
+  font-family: Tahoma, Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: rgb(247, 245, 245);
+  background-color: #000000;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+#Logokl {
+  align-self: center;
+  width: 400px;
+}
+
+.button {
+  font-family: Pixelschrift;
+  display: block;
+
+  width: 20em;
+  height: 2em;
+  margin: 3px;
+  padding: 1em 1em 0.25em 1em;
+  background-color: #ec681b;
+  color: #0e0d0d;
+  border-radius: 1em;
+  box-shadow: 3px 3px 5px #f79e6a;
+  text-align: center;
+  text-decoration: none;
+}
+.navigation {
+  margin-left: -25px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: left;
+}
+p {
+  font-family: "Courier New", Courier, monospace;
+  text-align: justify;
+  hyphens: auto;
+  padding: 1rem;
+}
+h1,
+h2,
+h3 {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  font-family: Pixelschrift;
+}
+#logogr {
+  align-self: center;
+  width: 650px;
+  padding: 2em;
+}

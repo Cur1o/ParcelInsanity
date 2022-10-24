@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level Auswahl</title>
+    <style>
+        @font-face {
+        font-family:Pixelschrift;
+        src: url('./font/retro.ttf');
+        }
+        body{
+            background-color:black;
+        }
+        header{
+           height:4rem;
+           border-bottom:solid 4px #ec681b; 
+        }
+        main{
+            display:grid;
+            grid-template-columns: 50% 50% ;
+            grid-template-rows:50% 50%  ;
+            grid-template-areas: 
+            "picture1 picture2 "
+            "picture3 picture4 "
+            ;
+            text-align:center;
+            text-decoration:none;
+            font-family:Pixelschrift;
+        }
+        h1{
+          text-decoration:none;
+          color:rgb(255, 255, 255);
+        }
+        #game1{
+            grid-area:picture1;
+            width:45vw;
+            height:auto;
+        }
+        #game2{
+            grid-area:picture2;
+            width:45vw;
+            height:auto;
+        }
+        #game3{
+            grid-area:picture3;
+            width:45vw;
+            height:auto;
+        }
+        #game4{
+            grid-area:picture4;
+            width:45vw;
+            height:auto;
+        }
+        /* Steuerungs und Infodarstellung */
+        #information{
+            background-color:rgb(0, 0, 0);
+            display:none;
+            justify-content: center;
+            position:absolute;
+            width:100vw;
+            height:87vh;
+            z-index:1;
+            top:5rem;
+            left:0;
+        }
+        #top{
+            display:flex;
+            justify-content:space-between;
+        }
+        #logobutton{
+            right:0;
+            background-color:transparent;
+            border:none;
+        }
+        #logo2{
+            height:4rem;
+            margin-left:auto;
+        }
+        #soundbutton{
+            margin-left:auto;
+            right:0;
+            background-color:transparent;
+            border:none;
+        }
+        #sound{
+            height:3rem;
+            margin-left:auto;
+        }
+        #steuerung{
+            width:45vw;
+            height:auto;
+        }
+        /*Level schrift darstellung*/
+
+        a{
+            text-decoration:none;
+
+        }
+        #level2{
+          text-decoration:none;
+          color:rgb(0, 255, 0);
+        }
+        #level3{
+            text-decoration:none;
+            color:#ec681b;
+        }
+        #level4{
+            text-decoration:none;
+            color:red;
+        }
+        .navigation{
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            
+        }
+        .button{
+            font-family: Pixelschrift;
+            display: block;
+            width: 10em;
+            height: 1.5em;
+            margin: 3px;
+            padding: 1em 1em 0.25em 1em;
+            background-color: #ec681b;
+            color: black;
+            border-radius: 1em;
+            box-shadow: 3px 3px 5px #f79e6a;
+            text-align: center;
+            text-decoration: none;
+        }
+        #logo{
+            padding-left:10.25rem;
+        }
+
+    </style>
+    <script>
+        'use strict';
+        window.addEventListener('load',e=>{
+        var audioswitch = 'an';
+        var menu = document.getElementById('logobutton');
+        var information = document.getElementById('information');
+        var active1 = false;
+        menu.addEventListener('click',event=>{
+            if(!active1){
+                information.style.display = 'flex';
+                active1 = true;
+            }else{
+                information.style.display = 'none';
+                active1 = false;
+            }
+        });
+        var soundbuttonimg = document.getElementById('soundbutton');
+        var soundimg = document.getElementById('sound');
+            if(!localStorage.getItem('audioswitch')){
+                localStorage.setItem('audioswitch','an')
+            }else{
+                if(localStorage.getItem('audioswitch')== 'an'){
+                    soundimg.src="./img/LautsprecherAn.png" 
+                }else{
+                    soundimg.src="./img/LautsprecherAus.png"
+                }
+            }
+        soundbuttonimg.addEventListener('click',event=>{
+            if(localStorage.getItem('audioswitch')== 'an'){
+                soundimg.src="./img/LautsprecherAus.png"
+                localStorage.setItem('audioswitch','aus');
+                
+                console.log('Audio An')
+            }else{
+                soundimg.src="./img/LautsprecherAn.png"
+                localStorage.setItem('audioswitch','an');
+                console.log('Audio Aus')
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+    <header id="header">
+        <header id="top">
+            <nav class="navigation">
+                <a class="button" href="Parcel_Insanity.html">Startbildschirm</a>
+                <a class="button" href="story.html">Story</a>
+            </nav>
+            <img id="logo" src="./img/logo.png" height="100%"/>
+            <button id="soundbutton"><img id='sound' src="./img/LautsprecherAn.png" /></button>
+            <button id="logobutton"><img id="logo2" src="./img/logo_C.png"/></button>
+        </header>
+    </header>
+<main>
+    <a href="./Game0.html" >
+        <h1 id="level1">(Tutorial)</h1>
+        <img id="game1" src="./img/game0.png"/>
+    </a>
+    <a href="./Game1.html" >
+        <h1 id="level2">Level 1 (Leicht)</h1>
+        <img id="game2" src="./img/game1.png"/>
+    </a>
+    <a href="./Game2.html" >
+        <h1 id="level3">Level 2 (Mittel)</h1>
+        <img id="game3" src="./img/game2.png"/>
+    </a>
+    <a href="./Game3.html" >
+        <h1 id="level4">Level 3 (Schwer)</h1>
+        <img id="game4" src="./img/game3.png"/>
+    </a>
+</main>
+<div id="information" width="100vw" height="100vh">
+    <img id="steuerung" src="./img/steuerung.png"/>
+    <div></div>
+</siv>
+</body>
+</html>

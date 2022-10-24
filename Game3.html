@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 3</title>
+    <link rel="stylesheet" type="text/css" href="./CSS/LevelDesign.css"/>
+    <script src="./js/spieler.js"></script>
+    <script>
+        'use strict';
+        var map=[
+        'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW',//1
+        'WWWWW                                               Z WWWWWW',//2
+        'WWWWWm                                      i       Z WWWWWW',//3
+        'WWWWWbbbbbbbbbbbbbbbbc  fbbbbbbbc  fbbbbbbbbbbbbbbbbWWWWWWWW',//4
+        'WWWWWBBGGRRggGGRRBBgga  aBGgRGgRa  aBBGGggRRRRGGggBBWWWWWWWW',//5
+        'WWWWWbbbbbbbbbbbbbbbbd  ebbbbbbbd  ebbbbbbbbbbbbbbbbWWWWWWWW',//6
+        'WWWWW                                               WWWWWWWW',//6
+        'WWWWWbbbbbbbbbbbbbbbbc  fbbbbbbbc  fbbbbbbbbbbbbbbbbWWWWWWWW',//6
+        'WWWWWBBGGggRRggGGBBRRa  aBBGgRBGa  aBBGGRRggRRGGBBggWWWWWWWW',//7
+        'WWWWWbbbbbbbbbbbbbbbbd  ebbbbbbbd  ebbbbbbbbbbbbbbbbWWWWWWWW',//8
+        'WWWWW                        i                      a    WWW',//9
+        'WWWWWbbbbbbbbbbbbbbbbc  fbbbbbbbc  fbbbbbbbbbbbbbbbbW    WWW',//10
+        'WWWWWGGRRBBggggRRBBGGa  aRggGBgRa  aggRRGGBBBBRRggGGW    WWW',//11
+        'WWWWWbbbbbbbbbbbbbbbbd  ebbbbbbbd  ebbbbbbbbbbWWWWWWW    WWW',//12
+        'WWWWW             i                           W  j       WWW',//13
+        'WWWWW                                         a          WWW',//14
+        'WWWWW                                         W      i   WWW',//15
+        'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW',//16
+        '01234567890123456789123456789012345678901234567890'//50
+        ];
+        const FELD = 40;
+        const TILES = ['W','S','G','g','B','R','Z','X','a','b','c','d','e','f','h','i','m','j'];
+        var BLOCKER = 'WSn';
+//ariablen Deklaration : Übernommen von JumpRun-------------------------------------------------------------------------------------------
+        var hintergrund,tileset,level,ausschnitt,spielfeld,anzeige,steuerung,zuletzt,meinSpieler;
+        var levelPosX;
+        var effekt = false; // Zum überprüfen der effekte
+         
+// EventListener teilweise übernummen von Jumprun------------------------------------------------------------------------------------------
+    window.addEventListener('load', ergebnis =>{
+    //Inplementierung Spieler   
+        var player = document.getElementById('Robo');
+        player.style.position ="relative";
+        player.style.left = 300 + "px";
+        player.style.top = 0 + "px";
+    //Hintergrund und Tileset
+        hintergrund = document.getElementById('Hintergrund');
+        tileset = document.getElementById('Tileset');
+    //Alles für den Levelausschnitt
+        spielfeld = document.getElementById('Spielfeld');
+        anzeige = document.getElementById('Anzeige');
+        level = zeichneLevel(map);
+        ausschnitt = document.createElement('canvas');
+        ausschnitt.width = 1280;
+        ausschnitt.height = 700;
+        spielfeld.appendChild(ausschnitt);
+    //aktueller Bildausschnitt wird vom Level auf das Spielfeld übertragen
+        let stift=level.getContext('2d');
+        let bereich = stift.getImageData(0,0,ausschnitt.width,ausschnitt.height);
+        stift = ausschnitt.getContext('2d');
+        stift.putImageData(bereich,0,0);
+
+    //Verankerung der Steuerung, Hier wird erkannt, ob eine Taste gedrückt wurde
+        window.addEventListener('keydown',steuern);
+        window.addEventListener('keyup',steuern);
+        steuerung = {'links':false,'rechts':false,'oben':false,'unten':false,'langsam':false,'schnell':false}
+    //Spielerkoordinaten des Spawns
+        meinSpieler = new Spieler(200,640,50);
+    //Zeitmesseung
+        zuletzt = new Date();
+        window.requestAnimationFrame(aktualisieren);
+    });
+//Aktualisieren: Übernommen von JumpRun----------------------------------------------------------------------------------------------
+    function aktualisieren() {
+            let jetzt = new Date();
+            let dauer = (jetzt.getTime()-zuletzt.getTime())/1000;
+            zuletzt = jetzt
+    //Anzeige des Spielers aufrufen
+            meinSpieler.aktualisieren(dauer);
+            window.requestAnimationFrame(aktualisieren);    
+    }
+// Steuerungstasten werden abgefragt-------------------------------------------------------------------------------------------------------------------
+    function steuern(ereignis){   
+    //Steuerung Links
+        if(ereignis.keyCode == 65 || ereignis.keyCode == 37){
+            steuerung.links = (ereignis.type == 'keydown');
+        } 
+    //Steuerung Rechts 
+        if(ereignis.keyCode == 68 || ereignis.keyCode == 39){
+            steuerung.rechts =(ereignis.type == 'keydown');
+        }
+    //Steuerung Oben
+        if(ereignis.keyCode == 87 || ereignis.keyCode == 38){
+            steuerung.oben =(ereignis.type == 'keydown');
+        }
+    //Steuerung Unten
+        if(ereignis.keyCode == 83 || ereignis.keyCode == 40){
+            steuerung.unten =(ereignis.type == 'keydown');
+        }
+    //langsamer 
+        if(ereignis.keyCode == 16){// wenn Shift gedrückt wird wird der Spieler verlangsamt
+            if(effekt == false){ // es wird überprüft ob ein effekt momentan Ausgeführt wird
+                meinSpieler.geschwindigkeit = 50; // geschwindigkeit wird Auf 50 reduziert
+                setTimeout(resetSpeed,5000); // Aktiviert die zurücksetzung des Effekt nach 5 sec
+               effekt = true; //setzt den Effekt auf true
+            }
+        }
+    //schneller
+        if(ereignis.keyCode == 32 ){
+            if(effekt == false){
+               meinSpieler.geschwindigkeit = 350 ; 
+               setTimeout(resetSpeed,5000);
+               effekt = true; 
+            }
+        }  
+    }
+//Damit die Geschwindigkeit zurückgesetzt wird   
+    function resetSpeed(){
+        meinSpieler.geschwindigkeit = 200; // Setzt die Geschwindigkeit auf Standart 200
+        setTimeout(resetCooldown,10000); //setzt den Effekt wieder auf false, sodass ein weiterer Effekt aktiviert werden kann
+    }
+//Wird ausgeführt nachdem der Cooldown abgelaufen ist 
+    function resetCooldown(){
+        effekt = false;
+    }
+//Karte wird gezeichnet ----übernommen von JumpRun--------------------------------------------------------------------------------------------------------------------------
+    function zeichneLevel(karte) {
+            let level = document.createElement('canvas');
+            level.width = FELD * karte[0].length;
+            level.height = FELD * karte.length-FELD;
+            let stift = level.getContext('2d');
+            //stift.drawImage(Hintergrund,0,0,2635,1962,400,50,900,600);
+            for (let zeile = 0; zeile < karte.length; zeile++) {
+                for (let spalte = 0; spalte < karte[zeile].length; spalte++) {
+                    let pos = TILES.indexOf(karte[zeile].charAt(spalte));
+                    if (pos>= 0) {
+                        stift.drawImage(tileset, TILES.indexOf(karte[zeile][spalte]) * FELD, 0, FELD, FELD, spalte * FELD, zeile * FELD, FELD, FELD);
+                    }
+                }  
+            }
+            return level;
+        }
+    </script>
+</head>
+<body>
+    <div id="Bildquellen">
+        <img src="./img/tileset.png" alt="Tileset" id="Tileset"/>
+        <img src="./img/Robo.png" alt="Robo" id="Robo"/> 
+    </div>
+    <div></div>
+    <div id="Spielfeld">
+        <div id="Anzeige">
+            <div id = "Gelb">Punkte Gelb: <span id="PunkteGelb">0</span></div>
+            <div id = "Gruen">Punkte Gruen: <span id="PunkteGruen">0</span></div>
+            <div id = "Blau">Punkte Blau: <span id="PunkteBlau">0</span></div>
+            <div id = "Rot">Punkte Rot: <span id="PunkteRot">0</span></div>
+            <div id="leben">
+                <img id="leben1" src="./img/leben.png" width="auto" height="100px"/>
+                <img id="leben2" src="./img/leben.png" width="auto" height="100px"/>
+                <img id="leben3" src="./img/leben.png" width="auto" height="100px"/>
+            </div>
+        </div>
+        <!--Hier wird das entsprechende canvas-Element über js eingesetzt-->
+    </div> 
+
+
+    <div id="quest">
+        <div id="anzeigeQuest"></div>
+        <!--Maren-->
+        <a href="./Startseite.html" >
+            <img id="Home" src="./img/Homebutton.png" width="auto" height="30px"/>
+        </a>  
+        <a id="Fragezeichen" href="#Steuerung">?</a>
+    </div>
+    <!---->
+    <div id="victory">
+        <h1>Herzlichen Glückwunsch wenn du den Müll entsorgst hast du gewonnen!</h1>
+        <span id="victoryGelb">Hallo Welt</span></br>
+        <span id="victoryGruen">Hallo Welt</span></br>
+        <span id="victoryBlau">Hallo Welt</span></br>
+        <span id="victoryRot">Hallo Welt</span></br>
+        <div id="winMenu">
+            <a href="./Game3.html" id="Neustart">Level Neu starten</a><br/>
+            <a href="./Startseite.html" id="Hauptmenu">zum Hauptmenu</a><br/>
+        </div>
+        <p id="credits">|Design: Maren |Level-Design: Stefan |Planung: Waldemar |Programmierung: Sandro|</p>    
+    </div>
+    <div id="defeat">
+        <h2>Game Over</h2>
+        <a href="./Game3.html" id="Neustart">Level Neu starten</a><br/>
+        <a href="./Startseite.html" id="Hauptmenu">zum Hauptmenu</a>
+    </div>
+    <form id="Steuerung" name="Steuerung">
+        <fieldset>
+            <legend id="SteuerungUeberschrift">Steuerung</legend><a class="Schliessfeld" href="#">&times;</a>
+            <img id="SteuerungBild" src="./img/steuerung.png"/>
+        </fieldset>
+    </form>
+</body>
+</html>
